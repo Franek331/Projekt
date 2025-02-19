@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Validation\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SeeSharp.Egzaminer.Domain\SeeSharp.Egzaminer.Domain.csproj" />
+    <ProjectReference Include="..\SeeSharp.Egzaminer.Shared\SeeSharp.Egzaminer.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

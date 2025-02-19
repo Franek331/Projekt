@@ -1,0 +1,45 @@
+﻿@page "/panel-teacher"
+<PageTitle>Panel Nauczyciela</PageTitle>
+
+<h1>Panel Nauczyciela</h1>
+
+<br />
+<br />
+
+<MudTable ServerData="ServerReload" Dense="true" Hover="true" @ref="table">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Dostępne Testy</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="nr_field" T="Element">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="name_field" T="Element">Nazwa Testu</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="status_field" T="Element">Status</MudTableSortLabel></MudTh>
+        <MudTh>Liczba Odpowiedzi do Oceny</MudTh>
+        <MudTh>Akcje</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Number</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="Liczba Odpowiedzi do Oceny">@context.PendingGradingCount</MudTd>
+        <MudTd DataLabel="Akcje">
+            <MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" OnClick="@(args => OnPublicationClick(context.TestId))">Oceń</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No matching records found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+    
+}

@@ -1,0 +1,93 @@
+﻿@page "/details-publication/{id}"
+<PageTitle>Szczegóły testu - panel teacher</PageTitle>
+
+
+<h3>Szczegóły Testu o ID: @IdUpper</h3>
+<br />
+<br />
+<div>Tytuł testu:</div>
+<h2>@TitleTest</h2>
+<br />
+<div>Opis</div>
+<h3>@Description</h3>
+<br />
+<br />
+
+<MudPaper>Czy ma być data końca testu</MudPaper>
+<MudCheckBox @bind-Value="EndDateTest_CheckBox" Color="Color.Primary"></MudCheckBox>
+
+
+<MudGrid>
+    <MudItem xs="12" lg="6">
+        <MudPaper>Data i godzina startu testu</MudPaper>
+        <MudPaper Class="d-flex align-center justify-left mud-width-full py-8">
+            @* <MudDatePicker PickerVariant="PickerVariant.Static" Orientation="Orientation.Landscape" DateChanged="@(e => selectedStartDate = e.Value)" /> *@
+            <MudDatePicker PickerVariant="PickerVariant.Static" Orientation="Orientation.Landscape" @bind-Date="selectedStartDate" />
+        </MudPaper>
+        <MudTimePicker Label="24 hours (editable)" Editable="true" @bind-Time="_time" />
+    </MudItem>
+
+    @if (EndDateTest_CheckBox)
+    {
+        <MudItem xs="12" lg="6">
+            <MudPaper>Data i godzina końca testu</MudPaper>
+            <MudPaper Class="d-flex align-center justify-left mud-width-full py-8">
+                <MudDatePicker PickerVariant="PickerVariant.Static" Orientation="Orientation.Landscape" @bind-Date="selectedEndDate" />
+            </MudPaper>
+            <MudTimePicker Label="24 hours (editable)" Editable="true" @bind-Time="_time2" />
+        </MudItem>
+    }
+
+</MudGrid>
+
+
+
+
+<MudPaper Class="mud-width-full" Style="height: 20px;"></MudPaper>
+
+
+
+<MudNumericField @bind-Value="IntValue" Label="Liczba dozwolonych podejść" Variant="Variant.Text" Min="0" Max="1000" />
+
+<MudPaper Class="mud-width-full" Style="height: 20px;"></MudPaper>
+
+
+
+<h2>Weryfikacja</h2>
+
+@if (AreQuestion == true)
+{
+    <div>test ma pytania przynajmniej jedno</div>
+}
+else
+{
+    <div>
+        test nie ma pytań<br />
+    </div>
+}
+
+
+<br />
+
+
+@if (AreCorrectAnswer == true)
+{
+    <div>
+        każde pytanie ma prawidłowe odpowiedzi
+    </div>
+}
+else
+{
+    <div>
+        nie każde pytanie ma prawidłowe odpowiedzi
+    </div>
+
+}
+
+<br />
+<br />
+
+
+<MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" OnClick="@(e => onPublicationClick() )">Publikuj test</MudButton>
+
+

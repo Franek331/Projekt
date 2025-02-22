@@ -507,6 +507,9 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("TestPublicationId")
                         .HasColumnType("uniqueidentifier");
 

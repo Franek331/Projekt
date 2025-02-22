@@ -12,8 +12,8 @@ using SeeSharp.Egzaminer.Infrastructure.Persistence;
 namespace SeeSharp.Egzaminer.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250219180617_AddAnswerSubmittedModel")]
-    partial class AddAnswerSubmittedModel
+    [Migration("20250222154437_Poprawa")]
+    partial class Poprawa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,7 +218,7 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                     b.Property<string>("SelectedOptions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TestPublicationId")
+                    b.Property<Guid>("TestPublicationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TestSubmissionId")
@@ -510,6 +510,9 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("TestPublicationId")
                         .HasColumnType("uniqueidentifier");
 
@@ -620,9 +623,11 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("QuestionId");
 
-                    b.HasOne("SeeSharp.Egzaminer.Domain.Entities.TestPublication", null)
+                    b.HasOne("SeeSharp.Egzaminer.Domain.Entities.TestPublication", "TestPublication")
                         .WithMany("AnswerSubmitted")
-                        .HasForeignKey("TestPublicationId");
+                        .HasForeignKey("TestPublicationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("SeeSharp.Egzaminer.Domain.Entities.TestSubmission", "TestSubmission")
                         .WithMany("Answers")
@@ -631,6 +636,8 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+
+                    b.Navigation("TestPublication");
 
                     b.Navigation("TestSubmission");
                 });

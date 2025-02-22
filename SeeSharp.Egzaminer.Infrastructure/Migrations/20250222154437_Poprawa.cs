@@ -5,7 +5,7 @@
 namespace SeeSharp.Egzaminer.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class Poprawa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

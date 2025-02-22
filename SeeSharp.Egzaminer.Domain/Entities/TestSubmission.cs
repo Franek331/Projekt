@@ -7,6 +7,7 @@ public class TestSubmission : BaseEntity
 
     public Guid UserId { get; set; }
     public ApplicationUser User { get; set; } = default!;
+    public DateTime SubmissionDate { get; set; }
 
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }

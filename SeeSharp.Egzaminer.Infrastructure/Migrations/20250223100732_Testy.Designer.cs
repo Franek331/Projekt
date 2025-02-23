@@ -12,8 +12,8 @@ using SeeSharp.Egzaminer.Infrastructure.Persistence;
 namespace SeeSharp.Egzaminer.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250222154437_Poprawa")]
-    partial class Poprawa
+    [Migration("20250223100732_Testy")]
+    partial class Testy
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,9 +340,6 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                     b.Property<Guid>("AnswerSubmittedId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AnswerSubmittedId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Comment")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -356,8 +353,6 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerSubmittedId");
-
-                    b.HasIndex("AnswerSubmittedId1");
 
                     b.ToTable("ManualGradingResults", (string)null);
                 });
@@ -621,7 +616,9 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
                 {
                     b.HasOne("SeeSharp.Egzaminer.Domain.Entities.Question", "Question")
                         .WithMany()
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SeeSharp.Egzaminer.Domain.Entities.TestPublication", "TestPublication")
                         .WithMany("AnswerSubmitted")
@@ -645,14 +642,10 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
             modelBuilder.Entity("SeeSharp.Egzaminer.Domain.Entities.ManualGradingResult", b =>
                 {
                     b.HasOne("SeeSharp.Egzaminer.Domain.Entities.AnswerSubmitted", "AnswerSubmitted")
-                        .WithMany()
+                        .WithMany("ManualGradingResults")
                         .HasForeignKey("AnswerSubmittedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SeeSharp.Egzaminer.Domain.Entities.AnswerSubmitted", null)
-                        .WithMany("ManualGradingResults")
-                        .HasForeignKey("AnswerSubmittedId1");
 
                     b.Navigation("AnswerSubmitted");
                 });
@@ -671,7 +664,7 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
             modelBuilder.Entity("SeeSharp.Egzaminer.Domain.Entities.TestPublication", b =>
                 {
                     b.HasOne("SeeSharp.Egzaminer.Domain.Entities.Test", "Test")
-                        .WithMany()
+                        .WithMany("TestPublications")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -721,6 +714,11 @@ namespace SeeSharp.Egzaminer.Infrastructure.Migrations
             modelBuilder.Entity("SeeSharp.Egzaminer.Domain.Entities.Question", b =>
                 {
                     b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("SeeSharp.Egzaminer.Domain.Entities.Test", b =>
+                {
+                    b.Navigation("TestPublications");
                 });
 
             modelBuilder.Entity("SeeSharp.Egzaminer.Domain.Entities.TestPublication", b =>

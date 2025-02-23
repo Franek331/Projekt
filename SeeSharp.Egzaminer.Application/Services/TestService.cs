@@ -34,29 +34,38 @@ public class TestService : ITestService
     }
 
 
-
     public IEnumerable<PublishTestDto> GetAll()
     {
         //using AppDbContext dbContext = new(); na new zgłąszał bład
 
-        tests = testRepository.GetAll().Include(tp => tp.Test)
-         .Select(tp => new PublishTestDto
-         {
-             TestId = tp.TestId,
-             StartDate = tp.StartDate,
-             EndDate = tp.EndDate,
-             MaxAttempts = tp.MaxAttempts,
-             Status = tp.Status,
-             Test = tp.Test != null ? new TestDto
-
-             {
-                 Title = tp.Test.Title,
-                 Description = tp.Test.Description
-             } : null
-
-         })
-         .ToList();
-
+        tests = testRepository.GetAll()
+         .Include(tp => tp.Test)
+                               .ThenInclude(t => t.Questions) // Dołącz pytania
+                               .Select(tp => new PublishTestDto
+                               {
+                                   TestId = tp.TestId,
+                                   StartDate = tp.StartDate,
+                                   EndDate = tp.EndDate,
+                                   MaxAttempts = tp.MaxAttempts,
+                                   Status = tp.Status,
+                                   Test = tp.Test != null ? new TestDto
+                                   {
+                                       Title = tp.Test.Title,
+                                       Description = tp.Test.Description,
+                                       //Questions = tp.Test.Questions?.Select(q => new QuestionDto)
+                                       //{
+                                       //    Content = q.Content,
+                                       //    Answers = q.Answers?.Select(a => new AnswerDto
+                                       //    {
+                                       //        Content = a.Content,
+                                       //        IsCorrect = a.IsCorrect
+                                       //    })
+                                       //}
+                                       
+                                   } : null
+                               })
+                               .ToList();
+        Console.WriteLine($"Loaded {tests.Count} tests from database");
         return tests;
     }
 

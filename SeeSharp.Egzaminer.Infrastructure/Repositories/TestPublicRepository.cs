@@ -115,7 +115,7 @@ public class TestPublicationRepository : ITestPublicationRepository
 
     public IQueryable<TestPublication> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.TestPublications;
     }
 
     public IQueryable<TestPublication> Find(Expression<Func<TestPublication, bool>> predicate)

@@ -6,4 +6,5 @@ public class Test : BaseEntity
 
     // Relacja wiele-do-wielu z pytaniami:
     public ICollection<Question> Questions { get; set; } = new List<Question>();
+    public ICollection<TestPublication> TestPublications { get; set; } = new List<TestPublication>();
 }

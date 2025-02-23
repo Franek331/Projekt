@@ -10,12 +10,20 @@ public class QuestionEntityMap : IEntityTypeConfiguration<Question>
     {
         builder.ToTable("Questions");
         builder.HasKey(x => x.Id);
+
         builder.Property(x => x.Content)
             .IsRequired()
             .HasMaxLength(9096);
+
         builder.Property(x => x.Points)
             .IsRequired();
+
         builder.Property(x => x.QuestionType)
             .IsRequired();
+
+        builder.HasMany(x => x.Answers)
+            .WithOne(x => x.Question)
+            .HasForeignKey(x => x.QuestionId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

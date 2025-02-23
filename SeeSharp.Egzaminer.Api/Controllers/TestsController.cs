@@ -19,9 +19,9 @@ public class TestsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        //return Ok(testService.GetAll());  //zachowałem zapis aby wiedziec jak było wcześniej a jak powinno być
         return Ok(Result<IEnumerable<PublishTestDto>>.Success(testService.GetAll()));
         
+
     }
 
 

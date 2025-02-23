@@ -21,7 +21,7 @@ public class TestPublicationEntityMap : IEntityTypeConfiguration<TestPublication
             .HasMaxLength(50);
 
         builder.HasOne(tp => tp.Test)
-            .WithMany()
+            .WithMany(tp => tp.TestPublications)
             .HasForeignKey(tp => tp.TestId)
             .OnDelete(DeleteBehavior.Cascade);
     }

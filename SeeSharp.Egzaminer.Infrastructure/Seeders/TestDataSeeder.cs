@@ -15,7 +15,7 @@ namespace SeeSharp.Egzaminer.Infrastructure.Persistence
                 var test1 = new Test
                 {
                     Id = Guid.NewGuid(),
-                    Title = "Test 1",
+                    Title = "C# junior developer",
                     Description = "Opis testu 1"
                 };
 

@@ -65,13 +65,11 @@ public class Program
         app.MapControllers();
         app.MapFallbackToFile("index.html");
 
-        // Przeprowadzanie migracji
         using (var dbContext = app.Services.CreateScope().ServiceProvider.GetService<AppDbContext>())
         {
             dbContext?.Database.Migrate();
 
-            // Za³aduj dane testowe, jeœli jeszcze ich nie ma
-            TestDataSeeder.Seed(dbContext!);  // Upewnij siê, ¿e wywo³ujesz Seed po migracjach
+            TestDataSeeder.Seed(dbContext!);
         }
 
         app.Run();

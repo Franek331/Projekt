@@ -16,7 +16,6 @@ public class Question : BaseEntity
     // Maksymalna liczba punktów za to pytanie
     public decimal Points { get; set; } = 1;
 
-    // Ewentualnie: Tagowanie, relacje do Testu, itp.
     public ICollection<QuestionAnswer>? Answers { get; set; } = new List<QuestionAnswer>();
     public ICollection<Test> Tests { get; set; } = new List<Test>();
 }
